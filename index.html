@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kim Lab — briankimlab.org</title>
+<meta name="description" content="The Kim Lab studies the molecular basis of cellular decision-making.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F6F2;
+    --ink:#1B1F1D;
+    --moss:#3F5C4C;
+    --moss-dim:#6C8377;
+    --line:#DAD7CE;
+    --accent:#8A6D3B;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--moss); }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:840px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(247,246,242,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-name{
+    font-family:'Newsreader', serif;
+    font-size:19px;
+    letter-spacing:0.01em;
+  }
+  .nav-links{
+    display:flex; gap:28px;
+    list-style:none; margin:0; padding:0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+  .nav-links a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:border-color 0.15s ease;
+  }
+  .nav-links a:hover{ border-color:var(--accent); }
+  .nav-toggle{ display:none; }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:96px 0 80px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--moss);
+    margin-bottom:22px;
+  }
+  .hero .eyebrow span{
+    display:block;
+    margin-bottom:6px;
+  }
+  .hero .eyebrow span:last-child{
+    margin-bottom:0;
+  }
+  h1{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:clamp(38px, 6vw, 60px);
+    line-height:1.08;
+    margin:0 0 28px;
+    max-width:24ch;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--moss);
+  }
+  .hero p.lede{
+    max-width:58ch;
+    font-size:18px;
+    color:#3A3F3B;
+  }
+  .hero-motif{
+    position:absolute;
+    right:-60px; top:40px;
+    width:340px; height:340px;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  @media (max-width:760px){
+    .hero-motif{ display:none; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    padding:64px 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:36px;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--moss-dim);
+  }
+  h2{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:28px;
+    margin:0;
+  }
+
+  /* About */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:48px;
+  }
+  .about-grid p{ margin:0 0 16px; }
+  .about-grid p:last-child{ margin-bottom:0; }
+  .fact-list{
+    list-style:none; margin:0; padding:0;
+    font-size:14.5px;
+    border-left:1px solid var(--line);
+    padding-left:20px;
+  }
+  .fact-list li{
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .fact-list li:last-child{ border-bottom:none; }
+  .fact-list .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--moss-dim);
+    display:block;
+    margin-bottom:4px;
+  }
+  @media (max-width:700px){
+    .about-grid{ grid-template-columns:1fr; }
+  }
+
+  /* Research */
+  .focus-list{
+    display:grid;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .focus-item{
+    background:var(--paper);
+    padding:26px 28px;
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:20px;
+  }
+  .focus-item .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--accent);
+    padding-top:3px;
+  }
+  .focus-item h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:19px;
+    margin:0 0 8px;
+  }
+  .focus-item p{ margin:0; color:#3A3F3B; font-size:15px; }
+  @media (max-width:600px){
+    .focus-item{ grid-template-columns:1fr; }
+  }
+
+  /* People */
+  .people-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:32px 28px;
+  }
+  .person{ }
+  .person .portrait{
+    width:100%;
+    aspect-ratio:4/5;
+    background:linear-gradient(160deg, #E7E4DA, #D3D0C6);
+    border:1px solid var(--line);
+    margin-bottom:14px;
+    position:relative;
+    overflow:hidden;
+  }
+  .person .portrait::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 30% 25%, rgba(63,92,76,0.18), transparent 45%),
+      radial-gradient(circle at 70% 70%, rgba(138,109,59,0.14), transparent 40%);
+  }
+  .person h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:17px;
+    margin:0 0 2px;
+  }
+  .person .role{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--moss-dim);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  @media (max-width:700px){
+    .people-grid{ grid-template-columns:repeat(2, 1fr); }
+  }
+  @media (max-width:460px){
+    .people-grid{ grid-template-columns:1fr 1fr; gap:20px; }
+  }
+
+  /* Publications */
+  .pub-list{ list-style:none; margin:0; padding:0; }
+  .meeting-sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--moss-dim);
+    margin:36px 0 16px;
+  }
+  .meeting-sub:first-of-type{ margin-top:0; }
+  .pub-item{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:20px;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .pub-item:first-child{ padding-top:0; }
+  .pub-year{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--moss-dim);
+    padding-top:3px;
+  }
+  .pub-item h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:17px;
+    margin:0 0 6px;
+    line-height:1.4;
+  }
+  .pub-item .meta{
+    font-size:14px;
+    color:#3A3F3B;
+  }
+
+  /* Contact */
+  .contact-block{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .contact-block address{
+    font-style:normal;
+    font-size:15px;
+    color:#3A3F3B;
+    line-height:1.8;
+  }
+  .contact-cta{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    font-size:22px;
+  }
+  .contact-cta a{
+    text-decoration:none;
+    border-bottom:1px solid var(--moss);
+  }
+
+  footer{
+    padding:32px 0 48px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--moss-dim);
+    display:flex;
+    justify-content:space-between;
+  }
+
+  /* Reveal on scroll */
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">Kim Lab</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#people">People</a></li>
+      <li><a href="#publications">Papers</a></li>
+      <li><a href="#meetings">Meetings</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span>Institute of Bioelectronic Medicine</span><span>Allen Discovery Center for Neuroimmune Interactions</span><span>Laboratory of Neuroimmunology</span></div>
+    <h1>From sensation to reflex: how neurons talk to immune cells — and what happens when it fails.</h1>
+    <p class="lede">The Kim Lab decodes the molecular circuits and cellular synapses that govern sensation and inflammation — using live-cell imaging, genetic perturbation, and chemo-, opto-, and toxogenetics. We are based at the Feinstein Institutes for Medical Research at Northwell Health.</p>
+  </div>
+  <svg class="hero-motif" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="70" stroke="#3F5C4C" stroke-width="0.75" opacity="0.5"/>
+    <circle cx="100" cy="100" r="46" stroke="#3F5C4C" stroke-width="0.75" opacity="0.5"/>
+    <circle cx="140" cy="70" r="5" fill="#8A6D3B" opacity="0.7"/>
+    <circle cx="60" cy="130" r="3.5" fill="#3F5C4C" opacity="0.6"/>
+    <circle cx="150" cy="140" r="2.5" fill="#3F5C4C" opacity="0.5"/>
+    <path d="M100 30 V170 M30 100 H170" stroke="#3F5C4C" stroke-width="0.4" opacity="0.25"/>
+  </svg>
+</header>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>About the lab</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>We are a research group focused on the neural circuits that talk to the immune system — and the cellular synapses where nerve and immune cell meet. We ask how these circuits sense injury and infection, and how they can be tuned to control inflammation without drugs.</p>
+        <p>The lab was founded by Dr. Brian S. Kim and is home to a mix of postdoctoral fellows, scientists, and physician-scientists working across neuroscience, immunology, and bioelectronic medicine. We value rigor, curiosity, and a healthy skepticism of our own hypotheses.</p>
+      </div>
+      <ul class="fact-list">
+        <li><span class="k">Principal Investigator</span>Dr. Brian S. Kim</li>
+        <li><span class="k">Est.</span>2014</li>
+        <li><span class="k">Focus</span>Neuroimmunology</li>
+        <li><span class="k">Location</span>New York City and Manhasset, New York</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Research focus</h2>
+    </div>
+    <div class="focus-list">
+      <div class="focus-item">
+        <span class="tag">01</span>
+        <div>
+          <h3>Neuroimmune engrams</h3>
+          <p>How does inflammation imprint different kinds of sensations and reflexes? We use live imaging and optogenetics to watch this happen in real time.</p>
+        </div>
+      </div>
+      <div class="focus-item">
+        <span class="tag">02</span>
+        <div>
+          <h3>Bioelectronic medicine and neuromodulation of inflammation</h3>
+          <p>The nervous system can reflexively control inflammation. We study how sensation itself is a central orchestrator of health and disease.</p>
+        </div>
+      </div>
+      <div class="focus-item">
+        <span class="tag">03</span>
+        <div>
+          <h3>Interorgan communication of inflammation</h3>
+          <p>We build simple, testable models of inflammation and irritation to identify novel modes of interorgan communication. We use chemical and viral tracing strategies, coupled to spatial transcriptomics.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="people">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>People</h2>
+    </div>
+    <div class="people-grid">
+      <div class="person">
+        <h3>Karen Anthony, PhD</h3>
+        <div class="role">Associate Director, Allen Discovery Center</div>
+      </div>
+      <div class="person">
+        <h3>Ayana Iijima, PhD</h3>
+        <div class="role">Postdoctoral Fellow</div>
+      </div>
+      <div class="person">
+        <h3>Xu Li, MD, PhD</h3>
+        <div class="role">Postdoctoral Fellow</div>
+      </div>
+      <div class="person">
+        <h3>Zhen Wang, MD, PhD</h3>
+        <div class="role">Postdoctoral Fellow</div>
+      </div>
+      <div class="person">
+        <h3>Xia Meng, PhD</h3>
+        <div class="role">Postdoctoral Fellow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>Selected publications</h2>
+    </div>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <span class="pub-year">2026</span>
+        <div>
+          <h3>Activation of the auricular vagus nerve reflex suppresses airway inflammation</h3>
+          <div class="meta">Shibuya R, Abe N, Song K, Rossen ND, Tamari M, Wang Z, Xie Z, Abe Y, Iriki H, Iijima A, Zamidar L, Li X, Meng X, Bimbo-Szuhai A, Burstein V, Gregory JK, Biscola NP, Anthony K, Enamorado M, Van Dyken SJ, Kabashima K, Hu H, Kim BS. <em>Immunity</em>. 2026 Jul 15:S1074-7613(26)00256-6. Epub ahead of print. PMID: 42456661.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2025</span>
+        <div>
+          <h3>The sensory neuroimmune frontier</h3>
+          <div class="meta">Kim BS, Artis D. <em>Immunity</em>. 2025 May 13;58(5):1033-1039. PMID: 40324378.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2025</span>
+        <div>
+          <h3>RAG suppresses group 2 innate lymphoid cells</h3>
+          <div class="meta">Ver Heul AM, Mack M, Zamidar L, Tamari M, Yang TL, Trier AM, Kim DH, Janzen-Meza H, Van Dyken SJ, Hsieh CS, Karo JM, Sun JC, Kim BS. <em>Elife</em>. 2025 May 6;13:RP98287. PMID: 40326866; PMCID: PMC12055012.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2024</span>
+        <div>
+          <h3>IL-33 potentiates histaminergic itch</h3>
+          <div class="meta">Trier AM, Ver Heul AM, Fredman A, Le V, Wang Z, Auyeung K, Meixiong J, Lovato P, Holtzman MJ, Wang F, Dong X, Ji AL, Kim BS. <em>J Allergy Clin Immunol</em>. 2024 Mar;153(3):852-859.e3. PMID: 37984799; PMCID: PMC10939899.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2024</span>
+        <div>
+          <h3>Sensory neurons promote immune homeostasis in the lung</h3>
+          <div class="meta">Tamari M, Del Bel KL, Ver Heul AM, Zamidar L, Orimo K, Hoshi M, Trier AM, Yano H, Yang TL, Biggs CM, Motomura K, Shibuya R, Yu CD, Xie Z, Iriki H, Wang Z, Auyeung K, Damle G, Demircioglu D, Gregory JK, Hasson D, Dai J, Chang RB, Morita H, Matsumoto K, Jain S, Van Dyken S, Milner JD, Bogunovic D, Hu H, Artis D, Turvey SE, Kim BS. <em>Cell</em>. 2024 Jan 4;187(1):44-61.e17. PMID: 38134932; PMCID: PMC10811756.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2023</span>
+        <div>
+          <h3>Dupilumab in patients with prurigo nodularis: two randomized, double-blind, placebo-controlled phase 3 trials</h3>
+          <div class="meta">Yosipovitch G, Mollanazar N, Ständer S, Kwatra SG, Kim BS, Laws E, Mannent LP, Amin N, Akinlade B, Staudinger HW, Patel N, Yancopoulos GD, Weinreich DM, Wang S, Shi G, Bansal A, O'Malley JT. <em>Nat Med</em>. 2023 May;29(5):1180-1190. PMID: 37142763; PMCID: PMC10202800.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2023</span>
+        <div>
+          <h3>Phase 2 Trial of Difelikefalin in Notalgia Paresthetica</h3>
+          <div class="meta">Kim BS, Bissonnette R, Nograles K, Munera C, Shah N, Jebara A, Cirulli J, Goncalves J, Lebwohl M; KOMFORT Trial Investigators. <em>N Engl J Med</em>. 2023 Feb 9;388(6):511-517. PMID: 36780675.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2021</span>
+        <div>
+          <h3>A basophil-neuronal axis promotes itch</h3>
+          <div class="meta">Wang F, Trier AM, Li F, Kim S, Chen Z, Chai JN, Mack MR, Morrison SA, Hamilton JD, Baek J, Yang TB, Ver Heul AM, Xu AZ, Xie Z, Dong X, Kubo M, Hu H, Hsieh CS, Dong X, Liu Q, Margolis DJ, Ardeleanu M, Miller MJ, Kim BS. <em>Cell</em>. 2021 Jan 21;184(2):422-440.e17. PMID: 33450207; PMCID: PMC7878015.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2020</span>
+        <div>
+          <h3>Treatment of atopic dermatitis with ruxolitinib cream (JAK1/JAK2 inhibitor) or triamcinolone cream</h3>
+          <div class="meta">Kim BS, Howell MD, Sun K, Papp K, Nasir A, Kuligowski ME; INCB 18424-206 Study Investigators. <em>J Allergy Clin Immunol</em>. 2020 Feb;145(2):572-582. PMID: 31629805.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2020</span>
+        <div>
+          <h3>Blood natural killer cell deficiency reveals an immunotherapy strategy for atopic dermatitis</h3>
+          <div class="meta">Mack MR, Brestoff JR, Berrien-Elliott MM, Trier AM, Yang TB, McCullen M, Collins PL, Niu H, Bodet ND, Wagner JA, Park E, Xu AZ, Wang F, Chibnall R, Council ML, Heffington C, Kreisel F, Margolis DJ, Sheinbein D, Lovato P, Vivier E, Cella M, Colonna M, Yokoyama WM, Oltz EM, Fehniger TA, Kim BS. <em>Sci Transl Med</em>. 2020 Feb 26;12(532):eaay1005. PMID: 32102931; PMCID: PMC7433875.</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-year">2017</span>
+        <div>
+          <h3>Sensory Neurons Co-opt Classical Immune Signaling Pathways to Mediate Chronic Itch</h3>
+          <div class="meta">Oetjen LK, Mack MR, Feng J, Whelan TM, Niu H, Guo CJ, Chen S, Trier AM, Xu AZ, Tripathi SV, Luo J, Gao X, Yang L, Hamilton SL, Wang PL, Brestoff JR, Council ML, Brasington R, Schaffer A, Brombacher F, Hsieh CS, Gereau RW 4th, Miller MJ, Chen ZF, Hu H, Davidson S, Liu Q, Kim BS. <em>Cell</em>. 2017 Sep 21;171(1):217-228.e13. PMID: 28890086; PMCID: PMC5658016.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="meetings">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>Conferences organized by Brian S. Kim</h2>
+    </div>
+
+    <h3 class="meeting-sub">Upcoming Meetings</h3>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <span class="pub-year">2027</span>
+        <div>
+          <h3>Cell Press Symposia: Neuro-immune axis: Charting the periphery</h3>
+          <div class="meta">In partnership with the Allen Discovery Center for Neuroimmune Interactions and Allen Institute. September 13–15, 2027. New York, USA.<br>Keynote speakers: Dr. Ardem Patapoutian (Scripps Research) and Gloria Choi (MIT).</div>
+        </div>
+      </li>
+    </ul>
+
+    <h3 class="meeting-sub">Past Meetings</h3>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <span class="pub-year">2025</span>
+        <div>
+          <h3>Cell Symposia: Neuro-immune axis: Charting the periphery</h3>
+          <div class="meta">In partnership with the Allen Discovery Center for Neuroimmune Interactions. September 7–9, 2025. New York City, NY, USA.<br>Keynote speakers: Dr. David Julius (UCSF) and Sue Kaech (Salk Institute).</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-block">
+      <address>
+        Institute of Bioelectronic Medicine<br>
+        Allen Discovery Center for Neuroimmune Interactions<br>
+        Lab of Neuroimmunology<br>
+        Feinstein Institutes for Medical Research<br>
+        350 Community Drive, Manhasset, NY 11030<br>
+        Northwell Health<br>
+        110 E. 59th Street, New York, NY 10022
+      </address>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <span>© 2026 Kim Lab</span>
+    <span>briankimlab.org</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
